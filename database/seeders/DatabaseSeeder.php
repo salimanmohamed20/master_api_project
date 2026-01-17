@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         $users=User::factory(10)->create();
 
-       \App\Models\Ticket::factory(10)->recycle($users)->create();
+       \App\Models\Ticket::factory(100)->recycle($users)->create();
     }
 }

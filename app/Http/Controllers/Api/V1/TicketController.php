@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\TicketRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\TicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 
