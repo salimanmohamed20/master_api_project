@@ -9,3 +9,4 @@ Route::prefix('v1')->group(function () {
     require __DIR__ . '/api_v1.php';
 });
 Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);

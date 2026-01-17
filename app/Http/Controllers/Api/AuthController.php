@@ -6,22 +6,31 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginUserRequest;
 use App\Http\Traits\ApiResponse;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
     use ApiResponse;
-    public function login(LoginUserRequest $request){
+
+    public function login(LoginUserRequest $request)
+    {
         $request->validated($request->all());
 
-        if(!auth()->attempt($request->only('email','password'))){
-            return $this->error('invalid credentials',401);
+        if (!auth()->attempt($request->only('email', 'password'))) {
+            return $this->error('invalid credentials', 401);
         }
 
-        $user=User::firstWhere('email',$request->email);
-        $token=$user->createToken('api_token')->plainTextToken;
-        return $this->ok("Authenticated",[
-            "token"=>$token,
+        $user = User::firstWhere('email', $request->email);
+        $token = $user->createToken('api_token for' . $user->email ,['*'],now()->addMonth())->plainTextToken;
+        return $this->ok("Authenticated", [
+            "token" => $token,
         ]);
 
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return $this->ok(" ");
     }
 }

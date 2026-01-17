@@ -4,9 +4,9 @@ namespace App\Http\Traits;
 
 trait ApiResponse
 {
-    protected function ok($message,$data): \Illuminate\Http\JsonResponse
+    protected function ok($message,$data=[]): \Illuminate\Http\JsonResponse
     {
-        return $this->success($message, $data,200);
+        return $this->success($message, $data=[],200);
     }
 
     protected function success($message, $data,$code = 200): \Illuminate\Http\JsonResponse
