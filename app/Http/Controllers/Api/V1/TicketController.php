@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\TicketRequest;
-use App\Http\Resources\TicketResource;
+use App\Http\Resources\V1\TicketResource;
 use App\Models\Ticket;
 
 class TicketController extends Controller
 {
     public function index()
     {
-        return TicketResource::collection(Ticket::all());
+        return TicketResource::collection(Ticket::with('user')->paginate());
     }
 
     public function store(TicketRequest $request)
