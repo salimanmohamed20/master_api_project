@@ -7,6 +7,7 @@ use App\Http\Filters\V1\AuthorFilter;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 
+
 class AuthorsController extends ApiController
 {
     public function index(AuthorFilter $filters)

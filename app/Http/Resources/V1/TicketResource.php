@@ -33,13 +33,13 @@ class TicketResource extends JsonResource
                             'id' => $this->user_id,
                         ],
                         'links' => [
-                            'related' => route('authors.show', ['user' => $this->user_id]),
+                            'related' => route('authors.show', ['author' => $this->user_id]),
                         ],
                     ],
                 ]
             ),
             'includes' =>
-                 new UserResource($this->whenLoaded('user')),
+                 new UserResource($this->whenLoaded('author')),
 
 
             "links" => [
