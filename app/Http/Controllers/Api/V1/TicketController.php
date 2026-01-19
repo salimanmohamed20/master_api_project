@@ -37,12 +37,19 @@ $user=User::findOrFail($request->input('data.relationships.author.data.id'));
   
     }
 
-    public function show(Ticket $ticket)
+    public function show($ticket_id)
     {
-        if($this->include('author')){
-            return new TicketResource($ticket->load('author'));
-        }
-        return new TicketResource($ticket);
+       try{
+            $ticket=Ticket::findOrFail($ticket_id);
+           if($this->include('author')){
+               return new TicketResource($ticket->load('author'));
+           }
+           return new TicketResource($ticket);
+       }catch(ModelNotFoundException){
+
+                   return $this->error("Ticket not found",404);
+
+       }
     }
 
     public function update(TicketRequest $request, Ticket $ticket)
@@ -52,10 +59,16 @@ $user=User::findOrFail($request->input('data.relationships.author.data.id'));
         return new TicketResource($ticket);
     }
 
-    public function destroy(Ticket $ticket)
+    public function destroy($ticket_id)
     {
-        $ticket->delete();
+        try{
+            $ticket=Ticket::findOrFail($ticket_id);
+         
+                $ticket->delete();
+            
+        }catch(ModelNotFoundException){
 
-        return response()->json();
+            return $this->error("Ticket not found",404);
+        }
     }
 }
