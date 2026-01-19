@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use App\Http\Permissions\V1\Abilities as V1Abilities;
 use Illuminate\Foundation\Http\FormRequest;
 
-use App\Permissions\V1\Abilities;
-
-class TicketRequest extends FormRequest
+class ReplaceTicketRequest extends BaseTicketRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,27 +19,19 @@ class TicketRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+   public function rules(): array
     {
         $rules= [
             'data.attributes.title' => 'required|string',
             'data.attributes.description' => 'required|string',
             'data.attributes.status' => 'required:in:A,C,X,H',
-            'data.relationships.author.data.id' => 'sometimes|exists:users,id',
+            'data.relationships.author.data.id' => 'required|exists:users,id',
   
             //
         ];
-        $user=$this->user();
        
-        if($this->routeIs('tickets.store')){
-            if($user->tokenCan(V1Abilities::CreateOwnTicket)){
-                $rules['data.relationships.author.data.id'] .= '|size:' . $user->id;
-            }
-
-
-        }
         return $rules;
     }
 
-   
+ 
 }

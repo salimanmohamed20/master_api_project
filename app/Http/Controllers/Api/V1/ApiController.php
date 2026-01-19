@@ -8,6 +8,7 @@ use App\Http\Traits\ApiResponse;
 class ApiController extends Controller
 {
     use ApiResponse;
+    protected $policyModel=[];
     public function include(string $relations):bool
     {
         $params = request()->get('include');
@@ -18,4 +19,16 @@ class ApiController extends Controller
         return in_array(strtolower($relations),$includes);
 
     }
+
+    
+
+public function isAble($ability,$targetModel)
+{
+    return $this->authorize($ability,[$targetModel,$this->policyModel]);
+}
+
+
+
+
+
 }
